@@ -1,12 +1,5 @@
 # Druid Realtime spec to read from multiple topics to multiple data sources
-
-Steps
------
-1. Start kafka topics
-2. Start realtime nodes
-3. Generate data
-4. Publlish data to multiple sources
- 
+Given below are the steps to follow to index data from multiple topics to corresponding data sources. The example below reads data from two kafka topics ```wikipedia_realtime``` and ```wiki_realtime```. It then indexes them into datasources ```wikipedia``` and ```wiki```.
 
 1. Start kafka topics
 ----------------------
@@ -21,14 +14,14 @@ $ bin/kafka-console-producer.sh --broker-list localhost:9092 --topic wiki_realti
 
 2. Start realtime nodes
 --------------------
-Start real time nodes using the realtime spec given in [realtime.spec](blob/master/examples/realtime.spec). This will listen to the two topics we just started in the 1st step.
+Start real time nodes using the realtime spec given in [realtime.spec](examples/realtime.spec). This will listen to the two topics we just started in the 1st step.
 
 ```bash 
 $ java -Xmx512m -Duser.timezone=UTC -Dfile.encoding=UTF-8 -Ddruid.realtime.specFile=/path/to/realtime.spec -classpath "config/_common:config/realtime:lib/*"  io.druid.cli.Main server realtime
 ```
 3. Generate data
 ----------------
-Now generate some example data as per the schema given in realtime spec using  [realtime.spec](blob/master/bin/generate-example-metrics). This is a simple python program that generates 25 records by default.
+Now generate some example data as per the schema given in realtime spec using  [generate-example-metrics](bin/generate-example-metrics). This is a simple python program that generates 25 records by default.
 
 ```bash 
 $ ./generate-example-metrics --count 25
