@@ -8,7 +8,7 @@ import time
 from datetime import datetime
 
 def main():
-  parser = argparse.ArgumentParser(description='Generate example page request latency metrics.')
+  parser = argparse.ArgumentParser(description='Generate example wiki edits.')
   parser.add_argument('--count', '-c', type=int, default=25, help='Number of events to generate (negative for unlimited)')
   args = parser.parse_args()
 
