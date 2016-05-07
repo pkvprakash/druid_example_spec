@@ -1,2 +1,2 @@
 # druid_example_spec
-Some example specs fro druid
+Some example specs for druid
