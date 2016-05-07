@@ -1,0 +1,57 @@
+#!/usr/bin/env python
+
+import argparse
+import json
+import random
+import sys
+import time
+from datetime import datetime
+
+def main():
+  parser = argparse.ArgumentParser(description='Generate example page request latency metrics.')
+  parser.add_argument('--count', '-c', type=int, default=25, help='Number of events to generate (negative for unlimited)')
+  args = parser.parse_args()
+
+  pages = ["Gypsy Danger", "Striker Eureka", "Cherno Alpha", "Crimson Typhoon", "Coyote Tango"];
+  users = ["nuclear", "speed", "masterYi", "triplets", "cancer"]
+  languages = ["en", "ru", "hi","zh", "ja"]
+  booleans = ["true", "false"]
+  namespaces = ["article", "wikipedia", "discussion"]
+
+  continents = ["Asia", "North America", "Australia"]
+  countries = ["Japan", "United States", "Australia"]
+  regions = ["Kanto", "Bay Area", "Cantebury"]
+  cities = ["Tokyo", "San Francisco", "Sydney"]
+
+  count = 0
+  while args.count < 0 or count < args.count:
+    timestamp = datetime.utcnow().strftime("%Y-%m-%dT%H:%M:%SZ")
+
+    r = random.randint(0,2);
+    added, deleted = random.randint(0,500), random.randint(0,500)
+    print(json.dumps({
+      'ts': timestamp,
+      'page': pages[random.randint(0,4)],
+      'language': languages[random.randint(0,4)],
+      'user': users[random.randint(0,4)],
+      'unpatrolled': booleans[random.randint(0,1)],
+      'newPage' : booleans[random.randint(0,1)],
+      'robot': booleans[random.randint(0,1)],
+      'anonymous': booleans[random.randint(0,1)],
+      'namespace': namespaces[r],
+      'continent': continents[r], 
+      'country': countries[r], 
+      'region': regions[r], 
+      'city': cities[r], 
+      'added': added, 
+      'deleted': deleted, 
+      'delta': (added - deleted)
+    }))
+
+    count += 1
+    time.sleep(1)
+
+try:
+  main()
+except KeyboardInterrupt:
+  sys.exit(1)
